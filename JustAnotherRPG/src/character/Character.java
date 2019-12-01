@@ -7,7 +7,7 @@ import combat.attacks.Spell;
 
 public abstract class Character {
 	HashMap<String, Integer> stats = new HashMap<String, Integer>();
-	String name = "defaultName";
+	String name = "eric";
 	
 	
 	Character(String name, int hp, int mp, int atk, int def, int sag) {
