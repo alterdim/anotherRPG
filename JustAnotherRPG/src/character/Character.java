@@ -3,6 +3,7 @@ package character;
 import java.util.HashMap;
 
 import combat.attacks.Spell;
+import combat.attacks.StatusEffect;
 
 
 public abstract class Character {
@@ -35,8 +36,31 @@ public abstract class Character {
 		this.currentMP = stats.get("mp");
 	}
 	
-	public int calculateDamage(Character target, Spell spell) {
-		int result = spell.multiplier;
+	class attackResult {
+		int result;
+		boolean statusAfflicted;
+		attackResult(int result, boolean statusAfflicted) {
+			this.result = result;
+			this.statusAfflicted = statusAfflicted;
+		}
+	}
+	
+	public attackResult calculateDamage(Character target, Spell spell) {
+		
+		attackResult result = new attackResult(-1, false);
+		
+		if (spell.hpCost > this.currentHP && spell.mpCost >= this.currentMP) {
+			if (spell.armorPen) 
+			{
+				result = new attackResult((int)(spell.multiplier * system.Randomizer.randomFloat(8, 12) * this.stats.get(spell.scaling) + system.Randomizer.randomInt(0, 1)), false);
+			}
+			else 
+			{
+				result = new attackResult((int)(spell.multiplier * system.Randomizer.randomFloat(8, 12) * this.stats.get(spell.scaling)/target.stats.get("def") + system.Randomizer.randomInt(0, 1)), false);
+			}
+			this.currentHP -= spell.hpCost;
+			this.currentMP -= spell.mpCost;
+		}
 		return result;
 		
 	}

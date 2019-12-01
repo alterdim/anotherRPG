@@ -8,12 +8,12 @@ public class Randomizer {
 		int elementPicker = random.nextInt(list.length);
 		return list[elementPicker];
 	}
-	public static int randomInt(int i) {
-		return random.nextInt(i);
+	public static int randomInt(int x, int y) {
+		return random.nextInt(y) + x;
 	}
 	
-	public static float randomFloat() {
-		return random.nextFloat();
+	public static double randomFloat(int x, int y) {
+		return (random.nextInt(y) + x )/10d;
 	}
 	
 	

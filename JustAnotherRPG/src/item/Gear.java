@@ -27,7 +27,7 @@ public class Gear extends Item {
 		this.level++;
 		String editStat = Randomizer.randomString(statList);
 		int oldStat = stats.get(editStat);
-		stats.put(editStat, oldStat + Randomizer.randomInt(5));
+		stats.put(editStat, oldStat + Randomizer.randomInt(0, 5));
 	}
 
 }
