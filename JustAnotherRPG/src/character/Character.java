@@ -64,6 +64,15 @@ public abstract class Character {
 		return result;
 		
 	}
+	
+	public boolean checkDeath() {
+		boolean dead = false;
+		if (this.currentHP <= 0) {
+			dead = true;
+		}
+		return dead;
+		
+	}
 
 	
 }
