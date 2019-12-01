@@ -16,6 +16,9 @@ public class Randomizer {
 		return (random.nextInt(y) + x )/10d;
 	}
 	
+	public static double randomFloat() {
+		return random.nextFloat();
+	}
 	
 
 }
