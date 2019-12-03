@@ -37,6 +37,24 @@ public abstract class Character {
 		this.currentHP = stats.get("hp");
 	}
 	
+	public void selfHeal(int amount) 
+	{
+		this.currentHP += amount;
+		if (this.currentHP > stats.get("hp")) 
+		{
+			restoreHP();
+		}
+	}
+	
+	public void selfMpHeal(int amount) 
+	{
+		this.currentMP += amount;
+		if (this.currentMP > stats.get("mp")) 
+		{
+			restoreMP();
+		}
+	}
+	
 	public void restoreMP() {
 		this.currentMP = stats.get("mp");
 	}
@@ -46,19 +64,21 @@ public abstract class Character {
 	}
 	
 	class attackResult {
-		int result;
+		int numericalResult;
 		boolean statusAfflicted;
-		attackResult(int result, boolean statusAfflicted) {
-			this.result = result;
+		attackResult(int numericalResult, boolean statusAfflicted) {
+			this.numericalResult = numericalResult;
 			this.statusAfflicted = statusAfflicted;
 		}
 	}
 	
-	public attackResult calculateDamage(Character target, Spell spell) {
+	public attackResult calculateDamage(Character target, Spell spell) 
+	{
 		
 		attackResult result = new attackResult(-1, false);
 		
-		if (spell.hpCost > this.currentHP && spell.mpCost >= this.currentMP) {
+		if (spell.hpCost > this.currentHP && spell.mpCost >= this.currentMP) 
+		{
 			if (spell.armorPen) 
 			{
 				result = new attackResult((int)(spell.multiplier * system.Randomizer.randomFloat(8, 12) * this.stats.get(spell.scaling) + system.Randomizer.randomInt(0, 1)), false);
@@ -67,22 +87,44 @@ public abstract class Character {
 			{
 				result = new attackResult((int)(spell.multiplier * system.Randomizer.randomFloat(8, 12) * this.stats.get(spell.scaling)/target.stats.get("def") + system.Randomizer.randomInt(0, 1)), false);
 			}
-			if (Randomizer.randomFloat() <= spell.statusChance) {
+			if (Randomizer.randomFloat() <= spell.statusChance) 
+			{
 				result.statusAfflicted = true;
+			}
+			if (spell.lifeSteal > 0) 
+			{
+				this.selfHeal(result.numericalResult);
+			}
+			if (spell.critChance > 0) 
+			{
+				if (system.Randomizer.randomFloat() <= spell.critChance) 
+				{
+					result.numericalResult *= 2;
+				}
 			}
 			this.currentHP -= spell.hpCost;
 			this.currentMP -= spell.mpCost;
+			if (result.numericalResult < 0) 
+			{
+				result.numericalResult = 0;
+			}
 		}
 		return result;
 		
 	}
 	
-	public boolean checkDeath() {
-		boolean dead = false;
-		if (this.currentHP <= 0) {
-			dead = true;
+	public boolean checkDeath() 
+	{
+		if (this.currentHP <= 0) 
+		{
+			return true;
 		}
-		return dead;
+		return false;
+		
+	}
+	
+	public void addEffect(StatusEffect effect) 
+	{
 		
 	}
 

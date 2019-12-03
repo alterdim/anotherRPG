@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Randomizer {
 		private static Random random = new Random();
-	public static String randomString(String[] list) {
+		public static String randomString(String[] list) {
 		int elementPicker = random.nextInt(list.length);
 		return list[elementPicker];
 	}
