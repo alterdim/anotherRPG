@@ -12,6 +12,7 @@ public abstract class Spell
 	public StatusEffect statusEffect = null;
 	public float statusChance = 0.1f;
 	public boolean armorPen = false;
+	public boolean isHealSpell = false;
 	
 	public Spell(int mpCost, int hpCost, boolean multiTarget, String scaling, int multiplier,
 			float critChance, float lifeSteal, StatusEffect statusEffect, float statusChance, boolean armorPen)

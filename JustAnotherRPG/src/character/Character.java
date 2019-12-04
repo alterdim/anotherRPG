@@ -73,6 +73,7 @@ public abstract class Character {
 		int numericalResult;
 		boolean statusAfflicted;
 		boolean criticalHit = false;
+		boolean multiHit = false;
 		attackResult(int numericalResult, boolean statusAfflicted) {
 			this.numericalResult = numericalResult;
 			this.statusAfflicted = statusAfflicted;
