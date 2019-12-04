@@ -11,6 +11,12 @@ public abstract class Character {
 	HashMap<String, Integer> stats = new HashMap<String, Integer>();
 	String name = "eric";
 	
+	// Effets de statut
+	StatusEffect[] effectIndex = new StatusEffect[3];
+	int[] statStoring = new int[3];
+	int activeEffects = 0;
+	//
+	
 	
 	Character(String name, int hp, int mp, int atk, int def, int sag, int spd) {
 		stats.put("hp", hp);
@@ -66,6 +72,7 @@ public abstract class Character {
 	class attackResult {
 		int numericalResult;
 		boolean statusAfflicted;
+		boolean criticalHit = false;
 		attackResult(int numericalResult, boolean statusAfflicted) {
 			this.numericalResult = numericalResult;
 			this.statusAfflicted = statusAfflicted;
@@ -93,13 +100,14 @@ public abstract class Character {
 			}
 			if (spell.lifeSteal > 0) 
 			{
-				this.selfHeal(result.numericalResult);
+				this.selfHeal((int)(result.numericalResult*spell.lifeSteal));
 			}
 			if (spell.critChance > 0) 
 			{
 				if (system.Randomizer.randomFloat() <= spell.critChance) 
 				{
 					result.numericalResult *= 2;
+					result.criticalHit = true;
 				}
 			}
 			this.currentHP -= spell.hpCost;
@@ -125,7 +133,22 @@ public abstract class Character {
 	
 	public void addEffect(StatusEffect effect) 
 	{
-		
+		this.effectIndex[activeEffects] = new StatusEffect(effect);
+		this.statStoring[activeEffects] = this.stats.get(effect.affectedStat);
+		float newStat = this.stats.get(effect.affectedStat) * effect.strength;
+		this.stats.put(effect.affectedStat, Math.round(newStat));
+		activeEffects++;
+	}
+	
+	public void updateEffects(StatusEffect effect)
+	{
+		for (int i = 0; i < activeEffects; i++) 
+		{
+			effectIndex[i].duration--;
+			if (effectIndex[i].duration <= 0) {
+				
+			}
+		}
 	}
 
 	
