@@ -1,5 +1,6 @@
 package character;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import combat.attacks.Spell;
@@ -7,13 +8,14 @@ import combat.attacks.StatusEffect;
 import system.Randomizer;
 
 
+
 public abstract class Character {
 	HashMap<String, Integer> stats = new HashMap<String, Integer>();
 	String name = "eric";
 	
 	// Effets de statut
-	StatusEffect[] effectIndex = new StatusEffect[3];
-	int[] statStoring = new int[3];
+	ArrayList<StatusEffect> effectIndex = new ArrayList<StatusEffect>();
+	ArrayList<Int> statStoring = new ArrayList<int>;
 	int activeEffects = 0;
 	//
 	
@@ -141,13 +143,17 @@ public abstract class Character {
 		activeEffects++;
 	}
 	
-	public void updateEffects(StatusEffect effect)
+	public void updateEffects()
 	{
 		for (int i = 0; i < activeEffects; i++) 
 		{
 			effectIndex[i].duration--;
-			if (effectIndex[i].duration <= 0) {
-				
+			if (effectIndex[i].duration <= 0) 
+			{
+				this.stats.put(effectIndex[i].affectedStat, statStoring[i]);
+				this.effectIndex[activeEffects] = null;
+				this.statStoring[activeEffects] = 0;
+				activeEffects--;
 			}
 		}
 	}
