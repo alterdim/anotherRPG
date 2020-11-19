@@ -11,11 +11,11 @@ import system.Randomizer;
 
 public abstract class Character {
 	HashMap<String, Integer> stats = new HashMap<String, Integer>();
-	String name = "eric";
+	String name = "Sadida";
 	
 	// Effets de statut
 	ArrayList<StatusEffect> effectIndex = new ArrayList<StatusEffect>();
-	ArrayList<Int> statStoring = new ArrayList<int>;
+	ArrayList<Integer> statStoring = new ArrayList<Integer>();
 	int activeEffects = 0;
 	//
 	
@@ -124,7 +124,7 @@ public abstract class Character {
 		
 	}
 	
-	public boolean checkDeath() 
+	public boolean isDead() 
 	{
 		if (this.currentHP <= 0) 
 		{
@@ -132,30 +132,6 @@ public abstract class Character {
 		}
 		return false;
 		
-	}
-	
-	public void addEffect(StatusEffect effect) 
-	{
-		this.effectIndex[activeEffects] = new StatusEffect(effect);
-		this.statStoring[activeEffects] = this.stats.get(effect.affectedStat);
-		float newStat = this.stats.get(effect.affectedStat) * effect.strength;
-		this.stats.put(effect.affectedStat, Math.round(newStat));
-		activeEffects++;
-	}
-	
-	public void updateEffects()
-	{
-		for (int i = 0; i < activeEffects; i++) 
-		{
-			effectIndex[i].duration--;
-			if (effectIndex[i].duration <= 0) 
-			{
-				this.stats.put(effectIndex[i].affectedStat, statStoring[i]);
-				this.effectIndex[activeEffects] = null;
-				this.statStoring[activeEffects] = 0;
-				activeEffects--;
-			}
-		}
 	}
 
 	
